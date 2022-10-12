@@ -23,6 +23,6 @@ setup(
         'hdfs==2.7.0',],
     entry_points='''
           [console_scripts]
-          target-jsonl=target_jsonl_webhdfs:main
+          target-jsonl-webhdfs=target_jsonl_webhdfs:main
       ''',
 )
