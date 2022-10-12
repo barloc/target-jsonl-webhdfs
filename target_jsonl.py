@@ -8,6 +8,7 @@ import os
 import sys
 from datetime import datetime
 from pathlib import Path
+import hdfs
 
 import singer
 from jsonschema import Draft4Validator, FormatChecker
@@ -29,7 +30,10 @@ def persist_messages(
     messages,
     destination_path,
     custom_name=None,
-    do_timestamp_file=True
+    do_timestamp_file=True,
+    webhdfs=False,
+    webhdfs_url=None,
+    webhdfs_user=None,
 ):
     state = None
     schemas = {}
@@ -52,21 +56,31 @@ def persist_messages(
                     "was encountered before a corresponding schema".format(o['stream'])
                 )
 
-            try: 
+            try:
                 validators[o['stream']].validate((o['record']))
             except jsonschema.ValidationError as e:
                 logger.error(f"Failed parsing the json schema for stream: {o['stream']}.")
                 raise e
 
             filename = (custom_name or o['stream']) + timestamp_file_part + '.jsonl'
-            if destination_path:
-                Path(destination_path).mkdir(parents=True, exist_ok=True)
-            filename = os.path.expanduser(os.path.join(destination_path, filename))
 
-            with open(filename, 'a', encoding='utf-8') as json_file:
-                json_file.write(json.dumps(o['record']) + '\n')
+            if webhdfs:
+                webhdfs_client = hdfs.InsecureClient(url=webhdfs_url, user=webhdfs_user)
 
-            state = None
+                result_path = f'{destination_path}/{filename}'
+                webhdfs_client.write(result_file, data=json.dumps(o['record']) + '\n', overwrite=False, append=True)
+
+                state = None
+            else:
+                if destination_path:
+                    Path(destination_path).mkdir(parents=True, exist_ok=True)
+                filename = os.path.expanduser(os.path.join(destination_path, filename))
+
+                with open(filename, 'a', encoding='utf-8') as json_file:
+                    json_file.write(json.dumps(o['record']) + '\n')
+
+                state = None
+
         elif message_type == 'STATE':
             logger.debug('Setting state to {}'.format(o['value']))
             state = o['value']
@@ -98,7 +112,10 @@ def main():
         input_messages,
         config.get('destination_path', ''),
         config.get('custom_name', ''),
-        config.get('do_timestamp_file', True)
+        config.get('do_timestamp_file', True),
+        config.get('webhdfs', False),
+        config.get('webhdfs_url', ''),
+        config.get('webhdfs_user', ''),
     )
 
     emit_state(state)

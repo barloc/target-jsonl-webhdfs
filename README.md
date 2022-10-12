@@ -1,6 +1,7 @@
-# target-jsonl
+# target-jsonl-webhdfs
 
-A [Singer](https://singer.io) target that writes data to JSONL ([JSON Lines](http://jsonlines.org/)) files.
+A [Singer](https://singer.io) target that writes data to HDFS cluater in the JSONL ([JSON Lines](http://jsonlines.org/)) format.
+This is fork of the [Target-jsonl](https://github.com/andyhuynh3/target-jsonl) repo.
 
 ## How to use it
 
@@ -57,11 +58,17 @@ Here is a brief description of the optional config keys
 
 `custom_name` - Specifies a custom name for the filename, instead of the stream name (i.e. `{custom_name}-{timestamp}.jsonl`, asumming `do_timestamp_file` is `true`). By default, the stream name will be used.
 
-`do_timestamp_file` - specifies if the file should get timestamped. By default, the resulting file will have a timestamp in the file name (i.e. `exchange_rate-{timestamp}.jsonl` as described above in the `Run` section). If this option gets set to `false`, the resulting file will not have a timestamp associated with it (i.e. `exchange_rate.jsonl` in our example).
+`do_timestamp_file` - Specifies if the file should get timestamped. By default, the resulting file will have a timestamp in the file name (i.e. `exchange_rate-{timestamp}.jsonl` as described above in the `Run` section). If this option gets set to `false`, the resulting file will not have a timestamp associated with it (i.e. `exchange_rate.jsonl` in our example).
+
+`webhdfs` - Boolean variable to enable webhdfs writing.
+
+`webhdfs_url` - Specifies url for connection to the webhdfs service (i.e. `http://hostname:port`).
+
+`webhdfs_user` - Specifies user that will be use for connect to the webhdfs service.
 
 ---
 
-Copyright &copy; 2020 Andy Huynh
+Copyright &copy; 2022 Andy Huynh, Stanislav Lysikov
 
 [Singer Tap]: https://singer.io
 [Braintree]: https://github.com/singer-io/tap-braintree

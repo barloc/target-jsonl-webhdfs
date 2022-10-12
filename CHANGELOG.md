@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.1.4.1] - 2022-10-11
+
+- add connection to webhdfs service
+
 ## [0.1.4] - 2022-02-10
 
 - [#7](https://github.com/andyh1203/target-jsonl/pull/7)
