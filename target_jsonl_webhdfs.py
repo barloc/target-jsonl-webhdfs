@@ -68,7 +68,7 @@ def persist_messages(
                 webhdfs_client = hdfs.InsecureClient(url=webhdfs_url, user=webhdfs_user)
 
                 result_path = f'{destination_path}/{filename}'
-                webhdfs_client.write(result_file, data=json.dumps(o['record']) + '\n', overwrite=False, append=True)
+                webhdfs_client.write(result_path, data=json.dumps(o['record']) + '\n', overwrite=False, append=True)
 
                 state = None
             else:
