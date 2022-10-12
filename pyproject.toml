@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "target-jsonl-webhdfs"
-version = "0.1.4.1"
+version = "0.1.4.2"
 description = "Singer.io target for writing JSON Line files via webhdfs"
 authors = [
     "Andy Huynh <andy.huynh312@gmail.com>",
@@ -31,4 +31,4 @@ adjust-precision-for-schema = "0.3.3"
 hdfs = "2.7.0"
 
 [tool.poetry.scripts]
-my_package_cli = 'target_jsonl_webhdfs:main'
+target_jsonl_webhdfs = 'target_jsonl_webhdfs:main'
