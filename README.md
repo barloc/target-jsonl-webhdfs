@@ -1,6 +1,6 @@
 # target-jsonl-webhdfs
 
-A [Singer](https://singer.io) target that writes data to HDFS cluater in the JSONL ([JSON Lines](http://jsonlines.org/)) format.
+A [Singer](https://singer.io) target that writes data to HDFS cluster in the JSONL ([JSON Lines](http://jsonlines.org/)) format.
 This is fork of the [Target-jsonl](https://github.com/andyhuynh3/target-jsonl) repo.
 
 ## How to use it
