@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.1.4.4] - 2022-10-19
+
+- add overwrite flag for webhdfs
+
 ## [0.1.4.1] - 2022-10-11
 
 - add connection to webhdfs service

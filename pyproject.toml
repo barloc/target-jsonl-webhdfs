@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "target-jsonl-webhdfs"
-version = "0.1.4.3"
+version = "0.1.4.4"
 description = "Singer.io target for writing JSON Line files via webhdfs"
 authors = [
     "Andy Huynh <andy.huynh312@gmail.com>",

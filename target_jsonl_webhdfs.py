@@ -34,6 +34,7 @@ def persist_messages(
     webhdfs=False,
     webhdfs_url=None,
     webhdfs_user=None,
+    webhdfs_overwrite=False,
 ):
     state = None
     schemas = {}
@@ -73,7 +74,9 @@ def persist_messages(
                 if file_status is None:
                     webhdfs_append = False
 
-                webhdfs_client.write(result_path, data=json.dumps(o['record']) + '\n', overwrite=False, append=webhdfs_append)
+                if webhdfs_overwrite:
+                    webhdfs_append = False
+                webhdfs_client.write(result_path, data=json.dumps(o['record']) + '\n', overwrite=webhdfs_overwrite, append=webhdfs_append)
 
                 state = None
             else:
@@ -121,6 +124,7 @@ def main():
         config.get('webhdfs', False),
         config.get('webhdfs_url', ''),
         config.get('webhdfs_user', ''),
+        config.get('webhdfs_overwrite', False),
     )
 
     emit_state(state)
